@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Header from '../components/Layout/Header'
 import Layout from '../components/Layout'
 import { SpeedDial, Image } from 'react-native-elements'
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 interface props extends NativeStackScreenProps<any, any> {
@@ -12,6 +13,15 @@ interface props extends NativeStackScreenProps<any, any> {
 
 const Home = (props: props) => {
 
+    const logout = async (value: any) => {
+
+
+        console.log({ value })
+
+        await AsyncStorage.removeItem("token")
+
+        props.navigation.navigate("Login");
+    }
 
     const [open, setOpen] = useState(false)
     useEffect(() => {
@@ -32,10 +42,16 @@ const Home = (props: props) => {
                         <Text style={{ fontSize: 30, fontWeight: '600' }}>Bienvenido</Text>
 
                     </View>
-                    <View style={{ marginTop: 10 }}>
-                        <TouchableOpacity onPress={() => props.navigation.navigate("Users")} style={{ backgroundColor: '#fff', padding: 5, borderRadius: 5 }}>
+                    <View style={{ marginTop: 10, flexDirection: "row", display: 'flex' }}>
+
+                        <TouchableOpacity onPress={() => props.navigation.navigate("Users")} style={{ marginRight: 5, backgroundColor: '#fff', padding: 5, borderRadius: 5 }}>
                             <Image style={{ width: 50, height: 50 }} source={require('../utils/users.png')} />
                             <Text style={{ textAlign: 'center' }}>Users</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={logout} style={{ marginRight: 5, backgroundColor: '#fff', padding: 5, borderRadius: 5 }}>
+                            <Image style={{ width: 50, height: 50 }} source={require('../utils/logout.png')} />
+                            <Text style={{ textAlign: 'center' }}>Log Out</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -46,7 +62,7 @@ const Home = (props: props) => {
             <SpeedDial
                 color='#1488CC'
                 isOpen={open}
-                icon={{ name: 'rowing', color: '#fff' }}
+                icon={{ name: 'list', color: '#fff' }}
                 openIcon={{ name: 'close', color: '#fff' }}
                 onOpen={() => setOpen(!open)}
                 onClose={() => setOpen(!open)}

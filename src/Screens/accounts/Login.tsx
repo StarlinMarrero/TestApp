@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState } from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 import { useAsyncStorage } from '@react-native-community/async-storage'
-import { Button, Input } from 'react-native-elements'
+import { Button, Input, Image } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { login } from '../../provider'
 
@@ -12,7 +12,7 @@ interface props extends NativeStackScreenProps<any, any> {
 
 const Login = ({ navigation }: props) => {
 
- 
+
     const Storage = useAsyncStorage("token");
 
     const initialState = {
@@ -49,6 +49,13 @@ const Login = ({ navigation }: props) => {
 
     return (
         <View style={styles.container}>
+
+            <View>
+                <Image style={{ width: 100, height: 100, marginBottom: 20 }} source={require('../../utils/icon.png')} />
+
+            </View>
+
+
             <View style={styles.viewInput}>
                 <Input
                     placeholder='Email'
@@ -71,7 +78,7 @@ const Login = ({ navigation }: props) => {
                 />
 
             </View>
-            <Button title="Enter" style={styles.button} loading={isLoading} onPress={handlerSubmit} />
+            <Button buttonStyle={styles.button} titleStyle={styles.textBtn} title="Enter" loading={isLoading} onPress={handlerSubmit} />
         </View>
     )
 }
@@ -85,11 +92,16 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     button: {
-        width: "300px"
+        width: "300px",
+        backgroundColor: '#27ae60',
+        
     },
     viewInput: {
 
         width: '80%'
+    },
+    textBtn: {
+        fontWeight: "600"
     }
 })
 
